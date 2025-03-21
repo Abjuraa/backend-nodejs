@@ -10,7 +10,7 @@ exports.registrar = async (usuario) => {
             usuario.email,
             hashPassword
         ];
-        global.db.query(q, values, (err, results) => { 
+        global.db.query(q, values, (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -22,17 +22,30 @@ exports.registrar = async (usuario) => {
     })
 }
 
-exports.ingresar = async (usuario) => { 
-    return new Promise((resolve, reject) => { 
-        const q = 'SELECT * FROM usuarios WHERE email = ?'; 
+exports.ingresar = async (usuario) => {
+    return new Promise((resolve, reject) => {
+        const q = 'SELECT * FROM usuarios WHERE email = ?';
         const values = [
             usuario.email
         ];
-        global.db.query(q, values, (err, results) => { 
+        global.db.query(q, values, (err, results) => {
             if (err) {
                 reject(err);
             } else {
                 resolve(results[0]);
+            }
+        })
+    })
+}
+
+exports.obtenerUsuarios = async () => {
+    return new Promise((resolve, reject) => {
+        const q = "SELECT * FROM usuarios";
+        global.db.query(q, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
             }
         })
     })

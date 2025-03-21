@@ -1,13 +1,13 @@
 const bcrypt = require('bcryptjs');
-const ingresarRepository = require('../repository/loginRepository');
+const loginRepository = require('../repository/loginRepository');
 
 exports.registrar = async (usuario) => { 
-    const response = await ingresarRepository.registrar(usuario);
+    const response = await loginRepository.registrar(usuario);
     return response
 }
 
 exports.ingresar = async (usuario) => {
-    const datos = await ingresarRepository.ingresar(usuario);
+    const datos = await loginRepository.ingresar(usuario);
 
     if (!datos) { 
         throw new Error('El usuario no existe')
@@ -24,4 +24,9 @@ exports.ingresar = async (usuario) => {
         nombre: datos.nombre,
         email: datos.email
     }
+}
+
+exports.obtenerUsuarios = async () => { 
+    const response = await loginRepository.obtenerUsuarios();
+    return response;
 }
