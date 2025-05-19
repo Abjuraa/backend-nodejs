@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const loginRepository = require('../repository/loginRepository');
+const { generarToken } = require('../utils/jwt');
 
 exports.registrar = async (usuario) => {
     const response = await loginRepository.registrar(usuario);
@@ -13,6 +14,7 @@ exports.registrar = async (usuario) => {
 
 exports.ingresar = async (usuario) => {
     const datos = await loginRepository.ingresar(usuario);
+    console.log(datos);
 
     if (!datos) {
         throw new Error('El usuario no existe')
@@ -23,11 +25,15 @@ exports.ingresar = async (usuario) => {
         throw new Error('Contraseña incorrecta')
     }
 
+    const token = generarToken({ id: datos.id});
+
+
     return {
         message: 'Ingreso exitoso',
-        id: datos.id,
         nombre: datos.nombre,
-        email: datos.email
+        apellido: datos.apellido,
+        email: datos.email,
+        token
     }
 }
 
