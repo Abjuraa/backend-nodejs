@@ -1,18 +1,18 @@
 const mysql = require('mysql');
-
-const connectDB = async () => { 
+require('dotenv').config();
+const connectDB = async () => {
     try {
         const connection = mysql.createPool({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'login',
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
             connectTimeout: 10000
         });
 
         console.log('Conexion exitosa a la base de datos');
         global.db = connection;
-    } catch (error) { 
+    } catch (error) {
         console.log('Error al conectar a la base de datos: ', error);
         process.exit(1);
     }
