@@ -1,4 +1,5 @@
 const { validarToken } = require('../utils/jwt');
+
 module.exports = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
