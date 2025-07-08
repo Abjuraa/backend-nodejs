@@ -1,4 +1,6 @@
 const loginServices = require('../services/loginServices');
+require("dotenv").config();
+
 
 exports.registrar = async (req, res, next) => {
     try {
@@ -14,6 +16,14 @@ exports.ingresar = async (req, res, next) => {
     const { email, password } = req.body;
     try {
         const response = await loginServices.ingresar({ email, password })
+
+        res.cookie("access_token", response.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 1000 * 60 * 60,
+            sameSite: "strict"
+        })
+
         res.status(200).json(response);
     } catch (error) {
         next(error);

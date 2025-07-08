@@ -1,10 +1,10 @@
 const createApp = require('./src/app');
-const DB = require('./src/config/db');
-const port = 4400;
+const pool = require('./src/config/db');
+const port = 8080;
 
 const startServer = async () => {
     try {
-        await DB;
+        await pool;
         const app = createApp();
 
         app.listen(port, () => {

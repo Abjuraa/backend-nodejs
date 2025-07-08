@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  mysql_nodejs:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: login
+      MYSQL_ROOT_PASSWORD: admin1234
+    ports:
+      - "4400:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

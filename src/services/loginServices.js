@@ -21,25 +21,26 @@ exports.registrar = async (usuario) => {
 
 //Service para la logica de negocio al ingresar
 exports.ingresar = async (usuario) => {
-    const datos = await loginRepository.ingresar(usuario);
+    const data = await loginRepository.ingresar(usuario);
 
-    if (!datos) {
+    if (!data) {
         throw new Error('El usuario no existe')
     }
 
-    const match = await bcrypt.compare(usuario.password, datos.password);
-    if (!match) {
+    const compare_password = await bcrypt.compare(usuario.password, data.password);
+    if (!compare_password) {
         throw new Error('Contraseña incorrecta')
     }
 
-    const token = generarToken({ id: datos.id, email: datos.email, nombre: datos.nombre, apellido: datos.apellido });
+    const token = generarToken({
+        id: data.id,
+        email: data.email
+    })
 
 
     return {
         message: 'Ingreso exitoso',
-        nombre: datos.nombre,
-        apellido: datos.apellido,
-        email: datos.email,
+        email: data.email,
         token
     }
 }
